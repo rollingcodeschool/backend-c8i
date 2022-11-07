@@ -5,7 +5,10 @@ import path from 'path';
 import productoRouter from './routes/productos.routes'
 import authRouter from './routes/usuarios.routes'
 //llamar a la conexion a la BD
-import './database'
+import './database';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 //crear una instancia de express
 const app = express();

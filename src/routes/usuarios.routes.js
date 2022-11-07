@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { check } from "express-validator";
 import { crearUsuario, login } from "../controllers/usuarios.controllers";
+import validarJWT from "../helpers/validar-jwt";
 
 const router = Router();
 
@@ -8,7 +9,7 @@ const router = Router();
 router
   .route("/")
   .post(
-    [
+    [ 
       check("email", "El email es obligatorio").isEmail(),
       check(
         "password",

@@ -7,6 +7,7 @@ import {
   obtenerProducto,
 } from "../controllers/productos.controllers";
 import { check } from "express-validator";
+import validarJWT from "../helpers/validar-jwt";
 
 const router = Router();
 
@@ -14,7 +15,7 @@ router
   .route("/productos")
   .get(listarProductos)
   .post(
-    [
+    [ validarJWT,
       check("nombreProducto")
         .notEmpty()
         .withMessage("El nombre del producto es un dato obligatorio")
@@ -51,8 +52,8 @@ router
 router
   .route("/productos/:id")
   .get(obtenerProducto)
-  .put(editarProducto)
-  .delete(borrarProducto);
+  .put(validarJWT, editarProducto)
+  .delete(validarJWT, borrarProducto);
 
 // app.get('/prueba',(req, res)=>{
 //     res.send('esto es una prueba de una peticion get')
