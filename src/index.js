@@ -3,6 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import path from 'path';
 import productoRouter from './routes/productos.routes'
+import authRouter from './routes/usuarios.routes'
 //llamar a la conexion a la BD
 import './database'
 
@@ -28,3 +29,6 @@ app.use(express.static(path.join(__dirname,'../public')));
 //rutas
 //http://localhost:4000/apicafe/prueba
 app.use('/apicafe', productoRouter)
+app.use('/apicafe/auth',authRouter)
+
+
