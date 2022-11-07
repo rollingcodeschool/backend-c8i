@@ -1,6 +1,6 @@
 import Usuario from "../models/usuario";
 import { validationResult } from "express-validator";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 import generarJWT from "../helpers/jwt";
 
 export const login = async (req, res) => {
@@ -27,21 +27,21 @@ export const login = async (req, res) => {
     }
     //verificar si el password corresponde con el pass encriptado en mi BD
     const passwordValido = bcrypt.compareSync(password, usuario.password);
-      // si no es valido el password  
+    // si no es valido el password
     if (!passwordValido) {
       return res.status(400).json({
         mensaje: "Correo o password invalido - password",
       });
     }
     //generar el token y enviarlo en la respuesta
-    const token = await generarJWT(usuario._id, usuario.usuario)
+    const token = await generarJWT(usuario._id, usuario.usuario);
 
     //responder que el usuario es correcto
     res.status(200).json({
       mensaje: "El usuario existe",
       uid: usuario._id,
-      nombre: usuario.usuario,
-    token: token
+      usuario: usuario.usuario,
+      token: token,
     });
   } catch (error) {
     console.log(error);
@@ -76,8 +76,8 @@ export const crearUsuario = async (req, res) => {
 
     //guardamos el nuevo usuario en la BD
     usuario = new Usuario(req.body);
-   //guardar el usuario en la BD con la pass encriptada
-   const salt = bcrypt.genSaltSync();
+    //guardar el usuario en la BD con la pass encriptada
+    const salt = bcrypt.genSaltSync();
     usuario.password = bcrypt.hashSync(password, salt);
 
     await usuario.save();
